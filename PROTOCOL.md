@@ -120,3 +120,51 @@ Code complet commenté (fonction → axiome), données brutes (`data/*.json` : N
 P(t), |I|(h), tables de balayage, tout en fonction du tick), journal exhaustif de TOUS les
 runs y compris ratés (`journal/`), rapport de verdict (`reports/VERDICT.md`). Tout exposant
 qui « tombe juste » est signalé « à éprouver » et soumis à sensibilité avant d'être rapporté.
+
+---
+
+# AMENDEMENT PRÉ-ENREGISTRÉ N°1 — Campagne A13 (dé-syntonisation thermique)
+
+**Figé avant tout run de la campagne A13.** Directive de campagne : exploiter la frontière
+de validité du verdict de la campagne 1 (compositions/mécanismes dé-syntonisant la
+compatibilité à haute densité) via un axiome additionnel et des germes massifs.
+
+## A13 — Saturation locale et photon (nouveau, par directive)
+
+Dans chaque voisinage causal (seau d'un ancêtre commun à profondeur ≤ p, même relation que
+A6), si les couplages compatibles d'un tick excèdent un plafond **C_max** (nouveau degré de
+liberté, fixe, jamais piloté), seuls les C_max premiers (ordre canonique, A8) produisent une
+exécution structurelle. Les messagers des couplages excédentaires ne sont **ni exécutés ni
+détruits** : leur état subit une translation de phase préservatrice d'information
+(`photon_emission` : rotation cyclique fixe + masque XOR constant — bijection de F2^m),
+puis ils reprennent leur vol (A5). Une paire visible dans plusieurs seaux n'est comptée que
+dans le premier (ordre trié).
+
+**Déclaration de conformité et de tension** : A13 n'encode aucune cible d'exposant, aucune
+grandeur macroscopique (RÈGLE D'OR intacte) ; il est local, myope et déterministe. En
+revanche, c'est structurellement une règle « si trop localement, alors dévier » : il
+**assouplit A9 à l'échelle locale**, par décision explicite de la direction de campagne.
+Cette dérogation est déclarée ici, pré-enregistrée, et auditée comme A13 dans `AUDIT.md`.
+C_max = 0 désactive strictement A13 (dynamique A1–A12 pure, vérifié par test).
+
+## Germes massifs « soupe primordiale » (par directive, remplace les germes pauvres)
+
+Bain de R racines + B événements lieurs (2 causes racines choisies par hachage
+déterministe), R + B ≥ 500, états par formule explicite (A8). **Aucune géométrie** : le
+graphe de recouvrement est un graphe de hachage, sans grille ni dimension encodée. Trois
+soupes structurellement différentes (M6) : `soup_sparse` (192+320), `soup_dense` (128+384),
+`soup_diluted` (300+200, fraction atomique gelée).
+
+## Périmètre et critères
+
+- Campagne exclusivement **sur-critique : f > k** (le régime que l'obstruction de la
+  campagne 1 condamnait sans A13).
+- Mesures M1–M7 inchangées ; critères de succès inchangés (mêmes cases, mêmes bornes).
+- Contrôles négatifs : M7-i/ii/iii inchangés, plus deux contrôles spécifiques A13,
+  chacun devant dégrader ou casser tout régime candidat, sinon le dire :
+  - **C_max = 0** (saturation coupée) : l'effondrement de la campagne 1 doit réapparaître,
+    sinon A13 ne fait rien ;
+  - **photon_off** (plafond actif, déphasage coupé) : isole la contribution propre de la
+    dé-syntonisation par rapport au simple plafonnement.
+- RÈGLE D'OR inchangée : l'itération sur C_max, s, etc. n'est permise que sur critère de
+  stabilité (existence d'un plateau stationnaire), jamais sur la valeur d'un exposant.

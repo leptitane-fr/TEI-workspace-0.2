@@ -86,7 +86,8 @@ def run(params: Params, label: str, checkpoint_every: int = 0,
         checkpoint_every = max(16, params.max_ticks // 10)
 
     series = {"tick": [], "n_flight": [], "events_new": [], "events_cum": [],
-              "max_depth": [], "candidates": [], "executed": [], "windowed_out": []}
+              "max_depth": [], "candidates": [], "executed": [], "windowed_out": [],
+              "photons": []}  # [A13] série des déphasages par tick (M5)
     checkpoints = []
     status = "completed"
     last_exec_tick = 0
@@ -110,6 +111,7 @@ def run(params: Params, label: str, checkpoint_every: int = 0,
         series["candidates"].append(rep.n_candidate_pairs)
         series["executed"].append(rep.n_executed)
         series["windowed_out"].append(removed)
+        series["photons"].append(rep.n_photon)
 
         if rep.n_executed > 0:
             last_exec_tick = rep.tick

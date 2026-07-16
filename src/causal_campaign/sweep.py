@@ -14,10 +14,11 @@ from .runner import run, summarize
 from .seeds import CAMPAIGN_SEEDS
 
 
-def run_seed_battery(base: Params, label_prefix: str, verbose: bool = True) -> list:
+def run_seed_battery(base: Params, label_prefix: str, verbose: bool = True,
+                     seeds: tuple = CAMPAIGN_SEEDS) -> list:
     """[M6] Les >= 3 germes obligatoires, même configuration par ailleurs."""
     results = []
-    for seed in CAMPAIGN_SEEDS:
+    for seed in seeds:
         params = replace(base, seed_name=seed)
         res = run(params, f"{label_prefix}-seed_{seed}", note=f"battery germes ({seed})")
         if verbose:

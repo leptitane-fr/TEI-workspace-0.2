@@ -102,7 +102,7 @@ class TickReport:
     n_flight: int
     n_candidate_pairs: int
     n_executed: int
-    n_windowed_out: int
+    n_photon: int = 0         # [A13] déphasages photoniques appliqués ce tick
 
 
 # ---------------------------------------------------------------------------
@@ -203,6 +203,21 @@ def birth_rot(state: int, m: int) -> int:
     return 1 + (mix64(state ^ 0xA24BAED4963EE407) % (m - 1))
 
 
+_PHOTON_MASK64 = 0x504F4C41524954E5  # constante de « polarité » (fixe, A8)
+
+
+def photon_emission(state: int, m: int) -> int:
+    """[A13] Translation de phase préservatrice d'information (photon non destructif).
+
+    Rotation cyclique d'un pas fixe impair + masque XOR constant : bijection de
+    F2^m (inversible), purement locale, sans compteur ni mesure. Appliquée aux
+    messagers des couplages excédentaires (au-delà de C_max) qui reprennent
+    ensuite leur vol (A5). Ne détruit ni ne crée aucun messager (non-destructif).
+    """
+    r = (m // 2) | 1
+    return rotl(state, r, m) ^ (_PHOTON_MASK64 & ((1 << m) - 1))
+
+
 # ---------------------------------------------------------------------------
 # Moteur
 # ---------------------------------------------------------------------------
@@ -283,13 +298,13 @@ class Engine:
         for msg in self.flight:
             msg.state = osc(msg, m)
 
-        # -- A4 + A6 : appariement local rare --
-        pairs, n_candidates = self._candidate_compatible_pairs()
+        # -- A4 + A6 (+ A13 saturation) : appariement local rare --
+        pairs, n_candidates, excess_idx = self._candidate_compatible_pairs()
         if n_candidates > P.max_candidate_pairs_per_tick:
             # Truncature de ressources d'expérimentateur : on ARRÊTE l'observation,
             # on ne bride jamais la dynamique (A9/A12).
             self.aborted = "candidate_explosion"
-            return TickReport(self.tick, [], len(self.flight), n_candidates, 0, 0)
+            return TickReport(self.tick, [], len(self.flight), n_candidates, 0)
 
         executed_sets = self._greedy_match(pairs)
 
@@ -301,6 +316,19 @@ class Engine:
         for group in executed_sets:
             for msg in group:
                 consumed.add(msg.mid)
+
+        # [A13] Émission photonique non destructive : les messagers des couplages
+        # excédentaires (non exécutés par ailleurs) subissent le déphasage puis
+        # reprennent leur vol (A5). control_photon_off (M7-A13) : plafond actif
+        # mais déphasage coupé — isole le rôle de la dé-syntonisation.
+        n_photon = 0
+        if excess_idx and not P.control_photon_off:
+            for i in sorted(excess_idx):
+                msg = self.flight[i]
+                if msg.mid not in consumed:
+                    msg.state = photon_emission(msg.state, m)
+                    n_photon += 1
+
         if consumed:
             self.flight = [msg for msg in self.flight if msg.mid not in consumed]
 
@@ -309,7 +337,7 @@ class Engine:
         self.newborn = []
 
         return TickReport(self.tick, new_events, len(self.flight),
-                          n_candidates, len(executed_sets), 0)
+                          n_candidates, len(executed_sets), n_photon)
 
     def apply_window(self, W: int) -> int:
         """[A11] Truncature d'expérimentateur : retire du domaine simulé les messagers
@@ -340,7 +368,17 @@ class Engine:
         (équivalent prouvable : intersection des ensembles de racines non vide).
         M7-iii (control_ignore_causality) : toute paire est testée, la
         structure causale est ignorée par la dynamique.
-        Retourne (liste triée de paires compatibles, nb de paires candidates testées).
+
+        [A13] Saturation locale : si C_max > 0, dans chaque voisinage causal
+        (seau d'un ancêtre commun), seuls les C_max premiers couplages
+        compatibles (ordre canonique, A8) restent candidats à l'exécution
+        structurelle ; les messagers des couplages excédentaires sont marqués
+        pour émission photonique (déphasage non destructif) et poursuivent
+        leur vol. Une paire visible dans plusieurs seaux n'est comptée que
+        dans le premier seau (ordre trié) — canonique et déterministe.
+
+        Retourne (paires compatibles retenues triées, nb candidates testées,
+        indices de vol marqués excédentaires).
         """
         P = self.P
         flight = self.flight
@@ -364,12 +402,15 @@ class Engine:
 
         seen = set()
         compatible = []
+        excess_idx = set()
         n_candidates = 0
         cap = P.max_candidate_pairs_per_tick
+        c_max = P.C_max  # [A13] 0 = désactivé (dynamique A1-A12 pure)
         for key in sorted(buckets):
             idxs = buckets[key]
             if len(idxs) < 2:
                 continue
+            bucket_kept = 0  # [A13] compteur local au voisinage causal
             for u in range(len(idxs) - 1):
                 i = idxs[u]
                 mi = flight[i]
@@ -381,13 +422,20 @@ class Engine:
                     seen.add(pk)
                     n_candidates += 1
                     if n_candidates > cap:
-                        return [], n_candidates
+                        return [], n_candidates, set()
                     mj = flight[j]
                     if trivial or pred(mi.state, mj.state, s, m):
-                        compatible.append((flight[pk[0]].mid, flight[pk[1]].mid, pk[0], pk[1]))
+                        if c_max == 0 or bucket_kept < c_max:
+                            compatible.append((flight[pk[0]].mid, flight[pk[1]].mid, pk[0], pk[1]))
+                            bucket_kept += 1
+                        else:
+                            # [A13] couplage excédentaire : pas d'exécution,
+                            # marquage pour déphasage photonique (non destructif)
+                            excess_idx.add(i)
+                            excess_idx.add(j)
         # Ordre canonique global (A8 : déterminisme intégral de l'appariement)
         compatible.sort()
-        return compatible, n_candidates
+        return compatible, n_candidates, excess_idx
 
     def _greedy_match(self, pairs) -> list:
         """[A4][A8] Appariement glouton déterministe en k-groupes mutuellement compatibles.

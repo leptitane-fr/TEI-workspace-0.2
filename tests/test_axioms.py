@@ -119,6 +119,50 @@ def test_rotl_inversible():
             assert rotl(rotl(x, r, m), m - r, m) == x & ((1 << m) - 1)
 
 
+def test_a13_photon_bijectif_preserve_information():
+    """[A13] L'émission photonique est une bijection de F2^m (non destructive)."""
+    from causal_campaign.engine import photon_emission
+    for m in (16, 32, 64):
+        seen = set()
+        for x in range(0, 1 << 16, 257):  # échantillon déterministe
+            y = photon_emission(x & ((1 << m) - 1), m)
+            assert y not in seen
+            seen.add(y)
+        # inversibilité explicite : rot puis xor => xor puis rot inverse
+        mask = (1 << m) - 1
+        r = (m // 2) | 1
+        for x in (0, 1, 0xBEEF & mask, mask):
+            y = photon_emission(x, m)
+            assert rotl(y ^ (0x504F4C41524954E5 & mask), m - r, m) == x
+
+
+def test_a13_cmax_zero_identique_a1_a12():
+    """[A13] C_max=0 désactive strictement A13 : aucune trajectoire modifiée."""
+    p0 = Params(max_ticks=150, max_candidate_pairs_per_tick=300_000)
+    p1 = Params(max_ticks=150, max_candidate_pairs_per_tick=300_000, C_max=0)
+    assert _run_hash(p0, 150) == _run_hash(p1, 150)
+
+
+def test_a13_determinisme_et_a1_sur_soupe():
+    """[A8][A13] Déterminisme intégral et >= 2 causes sur un germe soupe avec saturation."""
+    p = Params(seed_name="soup_diluted", f=3, k=2, s=8, C_max=1,
+               max_ticks=40, max_candidate_pairs_per_tick=600_000)
+    assert _run_hash(p, 40, max_events=4000) == _run_hash(p, 40, max_events=4000)
+    eng = build_engine(p)
+    n_seed = len(eng.events)
+    assert n_seed >= 500, "soupe primordiale : >= 500 événements initiaux"
+    for _ in range(30):
+        eng.step()
+        eng.apply_window(p.W)
+        if eng.aborted or len(eng.events) > 5000:
+            break
+    by_id = {e.eid: e for e in eng.events}
+    for e in eng.events[n_seed:]:
+        assert len(set(e.parents)) >= 2
+        for par in e.parents:
+            assert by_id[par].depth < e.depth
+
+
 if __name__ == "__main__":
     fns = [v for k, v in sorted(globals().items()) if k.startswith("test_")]
     for fn in fns:

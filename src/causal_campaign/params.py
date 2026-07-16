@@ -24,12 +24,16 @@ class Params:
     osc_rule: str = "rot_birth"        # [A3] "rot_birth" | "rot1_xor"
     compose_rule: str = "fold_rot_xor"  # [A2] "fold_rot_xor" | "fold_mul_add"
     predicate: str = "hamming"          # [A4] "hamming" | "block_zero"
-    seed_name: str = "vee"              # [A8] germe pauvre : "vee" | "wedge4" | "braid6" (+ témoin "antichain2")
+    seed_name: str = "vee"              # [A8] "vee" | "wedge4" | "braid6" | soupes "soup_{sparse,dense,diluted}"
+    C_max: int = 0                      # [A13] plafond de saturation locale par voisinage causal
+                                        #       (0 = A13 désactivé : dynamique A1-A12 pure)
 
     # --- Contrôles négatifs M7 (interrupteurs d'expérimentateur) ---
     control_trivial_predicate: bool = False  # [M7-i]  compatibilité toujours vraie
     control_p_infinite: bool = False         # [M7-ii] localité retirée (p = infini)
     control_ignore_causality: bool = False   # [M7-iii] couplages hors de tout lien de parenté
+    control_photon_off: bool = False         # [M7-A13] plafond C_max actif mais SANS déphasage
+                                             #          (isole le rôle de la dé-syntonisation)
 
     # --- Truncatures de ressources d'expérimentateur (PAS des règles, cf. A9/A11/A12) ---
     max_ticks: int = 2000
