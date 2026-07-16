@@ -72,7 +72,8 @@ def main() -> None:
 
     outdir = os.path.join(repo_root(), "data", "sweeps")
     os.makedirs(outdir, exist_ok=True)
-    out = os.path.join(outdir, "sweep_table.json")
+    out = os.path.join(outdir,
+                       "sweep_table_" + "-".join(args.axes) + ".json")
     with open(out, "w", encoding="utf-8") as fh:
         json.dump(table, fh, indent=2)
     print(f"table de balayage : {out}")
