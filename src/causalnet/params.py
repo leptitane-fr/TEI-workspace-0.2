@@ -58,9 +58,12 @@ class ExperimenterConfig:
 
     Aucun de ces champs n'est lu par le substrat pour décider d'une règle :
     - max_ticks     : durée d'observation (l'expérimentateur coupe le courant) ;
-    - abort_flight  : plafond de ressources machine ; s'il est franchi le run
-                      est ARRÊTÉ et journalisé EXPLOSION (A9 : la dynamique
-                      n'est jamais freinée, on cesse simplement d'observer) ;
+    - abort_flight  : plafond de ressources machine (messagers en vol) ; s'il
+                      est franchi le run est ARRÊTÉ et journalisé EXPLOSION
+                      (A9 : la dynamique n'est jamais freinée, on cesse
+                      simplement d'observer) ;
+    - abort_events  : même statut, sur le nombre d'événements (protège la
+                      mémoire de la machine — l'historique est l'instrument) ;
     - checkpoint_every : cadence des mesures M5 ;
     - front_layers  : épaisseur (en couches) du front mesuré en M2/M3 ;
     - m1_samples, m2_sources, m3_sources, m3_tmax : tailles d'échantillonnage
@@ -69,6 +72,7 @@ class ExperimenterConfig:
 
     max_ticks: int = 400
     abort_flight: int = 200_000
+    abort_events: int = 400_000
     checkpoint_every: int = 50
     front_layers: int = 4
     m1_samples: int = 200

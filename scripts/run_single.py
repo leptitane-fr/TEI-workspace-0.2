@@ -33,6 +33,7 @@ def build_argparser() -> argparse.ArgumentParser:
     # Instrument / ressources
     ap.add_argument("--ticks", type=int, default=400)
     ap.add_argument("--abort-flight", type=int, default=200_000)
+    ap.add_argument("--abort-events", type=int, default=400_000)
     ap.add_argument("--checkpoint-every", type=int, default=50)
     ap.add_argument("--front-layers", type=int, default=4)
     ap.add_argument("--label", default="nominal")
@@ -51,6 +52,7 @@ def main() -> None:
     a = build_argparser().parse_args()
     params = params_from_args(a)
     cfg = ExperimenterConfig(max_ticks=a.ticks, abort_flight=a.abort_flight,
+                             abort_events=a.abort_events,
                              checkpoint_every=a.checkpoint_every,
                              front_layers=a.front_layers)
     sub = Substrate(params)

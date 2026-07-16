@@ -79,7 +79,7 @@ def run(substrate: Substrate, params: Params, cfg: ExperimenterConfig,
         if st.n_flight == 0:
             outcome = "EXTINCTION"
             break
-        if st.n_flight > cfg.abort_flight:
+        if st.n_flight > cfg.abort_flight or st.n_events > cfg.abort_events:
             # Arrêt de RESSOURCES (instrument) — la dynamique n'a jamais été
             # freinée ; l'explosion est un résultat documenté (A9).
             outcome = "EXPLOSION"

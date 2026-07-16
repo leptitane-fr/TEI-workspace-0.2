@@ -73,3 +73,5 @@ exécution possible).
 | 20260716-201945_M7i_compat_triviale_85810275 | M7i_compat_triviale | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | EXPLOSION | ticks=7 | ev=27600 | d_front=0.533 | Dc=1.31 | ds=0.399 |
 | 20260716-202110_M7ii_sans_localite_85810275 | M7ii_sans_localite | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=300 | ev=1483 | d_front=nan | Dc=0.818 | ds=1.51e-06 |
 | 20260716-202226_M7iii_causalite_ignoree_85810275 | M7iii_causalite_ignoree | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.784 | ds=-0 |
+| 20260716-202624_sweep_k=3_9fa1976f | sweep_k=3 | m=32 s=4 f=3 k=3 p=3 W=8 N=600 sel=0 | STALLED | ticks=161 | ev=611 | d_front=nan | Dc=nan | ds=-0 |
+| 20260716-203344_sweep_k=4_5189bc81 | sweep_k=4 | m=32 s=4 f=3 k=4 p=3 W=8 N=600 sel=0 | STALLED | ticks=129 | ev=600 | d_front=nan | Dc=nan | ds=-0 |
