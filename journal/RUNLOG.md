@@ -19,3 +19,4 @@ exécution possible).
 | 20260716-174356_sweep_W=4_0e57dedf | sweep_W=4 | m=32 s=4 f=3 k=2 p=3 W=4 N=600 sel=0 | STALLED | ticks=177 | ev=753 | d_front=nan | Dc=0.755 | ds=-0 |
 | 20260716-174444_sweep_W=6_e3957407 | sweep_W=6 | m=32 s=4 f=3 k=2 p=3 W=6 N=600 sel=0 | STALLED | ticks=230 | ev=980 | d_front=nan | Dc=0.771 | ds=-0 |
 | 20260716-174524_nominal_v2_85810275 | nominal_v2 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
+| 20260716-174555_sweep_W=8_85810275 | sweep_W=8 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
