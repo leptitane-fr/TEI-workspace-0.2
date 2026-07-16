@@ -52,7 +52,7 @@ instruments n'utilisent que `math` et `collections`).
 ## État des lieux
 
 - Moteur, instruments, orchestration et tests : **en place** (8/8 tests axiomes).
-- Campagne **complète exécutée** : 213 runs journalisés (pilote 23 + campagne 5 étages
+- Campagne **complète exécutée** : 212 runs journalisés (pilote 23 + campagne 5 étages
   + confirmation longue 160 000 ticks), données brutes dans `data/`, synthèse dans
   `reports/ANALYSIS.md` (générée par `scripts/analyze.py`).
 - **Verdict : NON** (`reports/VERDICT.md`). Aucun run ne coche une case du critère
