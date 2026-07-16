@@ -37,6 +37,8 @@ class Params:
     max_messengers: int = 300_000
     max_candidate_pairs_per_tick: int = 2_000_000  # abandon documenté si dépassé ("explosion")
     stall_ticks: int = 4096   # arrêt si aucune exécution pendant N ticks (états périodiques => mort prouvable)
+    max_wall_seconds: int = 0  # plafond de temps mur par run (0 = aucun) — arrêt d'OBSERVATION
+                               # journalisé "wall_time" ; ne modifie jamais la dynamique
 
     def validate(self) -> None:
         assert self.m >= 16, "A2 exige m >= 16"

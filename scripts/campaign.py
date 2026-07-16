@@ -22,6 +22,7 @@ import sys
 sys.path.insert(0, os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "src"))
 
 from causal_campaign.params import Params
+from dataclasses import replace
 from causal_campaign.sweep import run_seed_battery, run_param_sweep, run_negative_controls
 
 # Configurations de base de la campagne. À enrichir au fil des découvertes —
@@ -30,17 +31,17 @@ BASES = {
     # Régime soutenu identifié au pilote (filament) — point de départ.
     "filament": Params(m=32, s=14, f=2, k=2, p=3, W=16, seed_name="vee",
                        max_ticks=20_000, max_events=100_000, max_messengers=100_000,
-                       max_candidate_pairs_per_tick=1_000_000, stall_ticks=4096),
+                       max_candidate_pairs_per_tick=1_000_000, stall_ticks=4096, max_wall_seconds=240),
     # Familles alternatives à explorer (états larges, prédicat par blocs, k=3).
     "wide_state": Params(m=64, s=24, f=2, k=2, p=3, W=16, seed_name="vee",
                          max_ticks=20_000, max_events=100_000, max_messengers=100_000,
-                         max_candidate_pairs_per_tick=1_000_000, stall_ticks=8192),
+                         max_candidate_pairs_per_tick=1_000_000, stall_ticks=8192, max_wall_seconds=240),
     "blocks": Params(m=32, s=2, f=2, k=2, p=3, W=16, predicate="block_zero", seed_name="vee",
                      max_ticks=20_000, max_events=100_000, max_messengers=100_000,
-                     max_candidate_pairs_per_tick=1_000_000, stall_ticks=4096),
+                     max_candidate_pairs_per_tick=1_000_000, stall_ticks=4096, max_wall_seconds=240),
     "triadic": Params(m=32, s=12, f=3, k=3, p=3, W=16, seed_name="vee",
                       max_ticks=20_000, max_events=100_000, max_messengers=100_000,
-                      max_candidate_pairs_per_tick=1_000_000, stall_ticks=4096),
+                      max_candidate_pairs_per_tick=1_000_000, stall_ticks=4096, max_wall_seconds=240),
 }
 
 SWEEPS = {
@@ -75,7 +76,8 @@ def stage3() -> None:
 
 def stage4() -> None:
     for name, base in BASES.items():
-        run_param_sweep(base, "max_ticks", [5_000, 20_000, 80_000, 320_000], f"camp-{name}-size")
+        big = replace(base, max_wall_seconds=600)
+        run_param_sweep(big, "max_ticks", [5_000, 20_000, 80_000, 320_000], f"camp-{name}-size")
 
 
 def stage5() -> None:
@@ -87,7 +89,7 @@ STAGES = {1: stage1, 2: stage2, 3: stage3, 4: stage4, 5: stage5}
 
 
 def main() -> None:
-    wanted = [int(a) for a in sys.argv[1:]] or sorted(STAGES)
+    wanted = [int(a) for a in sys.argv[1:]] or [1, 3, 5, 2, 4]
     for st in wanted:
         print(f"\n========== CAMPAGNE — ÉTAGE {st} ==========")
         STAGES[st]()

@@ -20,6 +20,7 @@ from __future__ import annotations
 import hashlib
 import json
 import os
+import time
 
 from . import journal, measures
 from .params import Params
@@ -89,8 +90,12 @@ def run(params: Params, label: str, checkpoint_every: int = 0,
     checkpoints = []
     status = "completed"
     last_exec_tick = 0
+    t_start = time.monotonic()
 
     while engine.tick < params.max_ticks:
+        if params.max_wall_seconds and time.monotonic() - t_start > params.max_wall_seconds:
+            status = "wall_time"  # truncature de ressources (temps mur), documentée
+            break
         rep = engine.step()
         if engine.aborted:
             status = engine.aborted
