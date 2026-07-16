@@ -1,0 +1,63 @@
+{
+  "run": "20260716-201813_sweep_s=7_long_3289190a",
+  "grid": {
+    "2_plateau_une_decade": {
+      "found": false,
+      "r1": null,
+      "r2": null,
+      "d_plateau": NaN,
+      "decades": 0.0
+    },
+    "1_d_front_dans_fenetre": {
+      "d_front": NaN,
+      "ok": false
+    },
+    "3_stationnarite": {
+      "ok": false,
+      "reason": "moins de 2 checkpoints exploitables",
+      "values": []
+    },
+    "4_spectrale_concordante": {
+      "d_s": 2.0407539727189492e-05,
+      "d_front": NaN,
+      "ok": false
+    },
+    "5_D_causal_egal_d_plus_1": {
+      "D_causal": 1.7277825099094786,
+      "attendu": NaN,
+      "ok": false
+    },
+    "6_robustesse": {
+      "n_runs": 48,
+      "n_completed": 0,
+      "n_dans_fenetre": 0,
+      "W_ecart_d_front": NaN,
+      "ok": false
+    },
+    "7_controles_negatifs": {
+      "rows": [
+        {
+          "control": "M7i_compat_triviale",
+          "outcome": "EXPLOSION",
+          "d_front": 0.5974059272050375,
+          "casse": true
+        },
+        {
+          "control": "M7ii_sans_localite",
+          "outcome": "STALLED",
+          "d_front": NaN,
+          "casse": true
+        },
+        {
+          "control": "M7iii_causalite_ignoree",
+          "outcome": "STALLED",
+          "d_front": NaN,
+          "casse": true
+        }
+      ],
+      "ok": true
+    }
+  },
+  "toutes_cases": false,
+  "verdict_mecanique": "NON ou INDÉTERMINÉ (cases manquantes — voir détail)"
+}
