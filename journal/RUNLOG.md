@@ -67,3 +67,5 @@ exécution possible).
 | 20260716-201329_sweep_dephase_den=32_65e5b764 | sweep_dephase_den=32 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=292 | ev=1449 | d_front=nan | Dc=0.813 | ds=1.44e-11 |
 | 20260716-201511_sweep_dephase_den=128_40dd7593 | sweep_dephase_den=128 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=251 | ev=1627 | d_front=nan | Dc=0.813 | ds=1.02e-11 |
 | 20260716-201516_sweep_f=5_2dc5821f | sweep_f=5 | m=32 s=4 f=5 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=267 | ev=4510 | d_front=nan | Dc=0.846 | ds=9.85e-07 |
+| 20260716-201622_sweep_s=7_3289190a | sweep_s=7 | m=32 s=7 f=3 k=2 p=3 W=8 N=600 sel=0 | COMPLETED | ticks=800 | ev=50167 | d_front=nan | Dc=1.42 | ds=-0 |
+| 20260716-201626_sweep_k=2_85810275 | sweep_k=2 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
