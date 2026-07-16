@@ -1,20 +1,20 @@
 [
   {
     "control": "M7i_compat_triviale",
-    "run_id": "20260716-173850_M7i_compat_triviale_85810275",
+    "run_id": "20260716-201945_M7i_compat_triviale_85810275",
     "outcome": "EXPLOSION",
-    "final_tick": 13,
-    "n_events": 293100,
-    "d_front": 0.5974059272050375,
-    "D_causal": 1.458258626427046,
-    "d_s": 0.46080327518822867,
-    "front_nodes": 231975,
-    "height": 14,
-    "width_max": 94725
+    "final_tick": 7,
+    "n_events": 27600,
+    "d_front": 0.5333457677814434,
+    "D_causal": 1.3105264615771708,
+    "d_s": 0.3990349133635511,
+    "front_nodes": 22725,
+    "height": 8,
+    "width_max": 9225
   },
   {
     "control": "M7ii_sans_localite",
-    "run_id": "20260716-174015_M7ii_sans_localite_85810275",
+    "run_id": "20260716-202110_M7ii_sans_localite_85810275",
     "outcome": "STALLED",
     "final_tick": 300,
     "n_events": 1483,
@@ -27,7 +27,7 @@
   },
   {
     "control": "M7iii_causalite_ignoree",
-    "run_id": "20260716-174134_M7iii_causalite_ignoree_85810275",
+    "run_id": "20260716-202226_M7iii_causalite_ignoree_85810275",
     "outcome": "STALLED",
     "final_tick": 238,
     "n_events": 1435,
