@@ -54,3 +54,16 @@ exécution possible).
 | 20260716-195826_sweep_p=3_85810275 | sweep_p=3 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
 | 20260716-195951_sweep_p=4_d360b7fe | sweep_p=4 | m=32 s=4 f=3 k=2 p=4 W=8 N=600 sel=0 | STALLED | ticks=283 | ev=1482 | d_front=nan | Dc=0.811 | ds=-0 |
 | 20260716-200120_sweep_p=5_55070aab | sweep_p=5 | m=32 s=4 f=3 k=2 p=5 W=8 N=600 sel=0 | STALLED | ticks=300 | ev=1483 | d_front=nan | Dc=0.818 | ds=-0 |
+| 20260716-200201_sweep_s=8_7ac0ce64 | sweep_s=8 | m=32 s=8 f=3 k=2 p=3 W=8 N=600 sel=0 | EXPLOSION | ticks=9 | ev=22264 | d_front=nan | Dc=0.864 | ds=2.71e-11 |
+| 20260716-200402_sweep_dephase_num=0_9500401c | sweep_dephase_num=0 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=289 | ev=1735 | d_front=nan | Dc=0.813 | ds=4.21e-12 |
+| 20260716-200437_sweep_m=64_3a059af0 | sweep_m=64 | m=64 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=320 | ev=630 | d_front=nan | Dc=nan | ds=-0 |
+| 20260716-200513_sweep_dephase_num=1_85810275 | sweep_dephase_num=1 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
+| 20260716-200530_sweep_f=2_07c0a766 | sweep_f=2 | m=32 s=4 f=2 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=204 | ev=807 | d_front=nan | Dc=0.735 | ds=-0 |
+| 20260716-200641_sweep_f=3_85810275 | sweep_f=3 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
+| 20260716-200718_sweep_dephase_num=2_bdd91204 | sweep_dephase_num=2 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=292 | ev=1449 | d_front=nan | Dc=0.813 | ds=1.44e-11 |
+| 20260716-200922_sweep_dephase_num=4_fcbd072d | sweep_dephase_num=4 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=292 | ev=1449 | d_front=nan | Dc=0.813 | ds=1.44e-11 |
+| 20260716-201013_sweep_f=4_37a1cd4f | sweep_f=4 | m=32 s=4 f=4 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=239 | ev=3114 | d_front=0.115 | Dc=0.836 | ds=1.48e-06 |
+| 20260716-201126_sweep_dephase_den=16_d94b5e02 | sweep_dephase_den=16 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=292 | ev=1449 | d_front=nan | Dc=0.813 | ds=1.44e-11 |
+| 20260716-201329_sweep_dephase_den=32_65e5b764 | sweep_dephase_den=32 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=292 | ev=1449 | d_front=nan | Dc=0.813 | ds=1.44e-11 |
+| 20260716-201511_sweep_dephase_den=128_40dd7593 | sweep_dephase_den=128 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=251 | ev=1627 | d_front=nan | Dc=0.813 | ds=1.02e-11 |
+| 20260716-201516_sweep_f=5_2dc5821f | sweep_f=5 | m=32 s=4 f=5 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=267 | ev=4510 | d_front=nan | Dc=0.846 | ds=9.85e-07 |
