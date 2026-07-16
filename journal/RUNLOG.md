@@ -49,3 +49,8 @@ exécution possible).
 | 20260716-190141_sweep_s=4_85810275 | sweep_s=4 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
 | 20260716-190225_sweep_s=6_eee38109 | sweep_s=6 | m=32 s=6 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=394 | ev=15652 | d_front=nan | Dc=1.08 | ds=-0 |
 | 20260716-190256_sweep_m=48_b084b2b4 | sweep_m=48 | m=48 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=240 | ev=616 | d_front=nan | Dc=nan | ds=-0 |
+| 20260716-195459_sweep_p=1_7391a716 | sweep_p=1 | m=32 s=4 f=3 k=2 p=1 W=8 N=600 sel=0 | STALLED | ticks=175 | ev=863 | d_front=nan | Dc=nan | ds=1.96e-09 |
+| 20260716-195715_sweep_p=2_0e91daaf | sweep_p=2 | m=32 s=4 f=3 k=2 p=2 W=8 N=600 sel=0 | STALLED | ticks=271 | ev=1354 | d_front=0.28 | Dc=0.795 | ds=0.0132 |
+| 20260716-195826_sweep_p=3_85810275 | sweep_p=3 | m=32 s=4 f=3 k=2 p=3 W=8 N=600 sel=0 | STALLED | ticks=238 | ev=1435 | d_front=nan | Dc=0.816 | ds=-0 |
+| 20260716-195951_sweep_p=4_d360b7fe | sweep_p=4 | m=32 s=4 f=3 k=2 p=4 W=8 N=600 sel=0 | STALLED | ticks=283 | ev=1482 | d_front=nan | Dc=0.811 | ds=-0 |
+| 20260716-200120_sweep_p=5_55070aab | sweep_p=5 | m=32 s=4 f=3 k=2 p=5 W=8 N=600 sel=0 | STALLED | ticks=300 | ev=1483 | d_front=nan | Dc=0.818 | ds=-0 |
