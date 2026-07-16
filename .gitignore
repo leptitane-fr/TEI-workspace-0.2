@@ -1,0 +1,6 @@
+__pycache__/
+*.pyc
+.pytest_cache/
+# Les données de runs OFFICIELS sont versionnées (livraison : données brutes).
+# Seul l'espace de travail transitoire est ignoré :
+data/scratch/
