@@ -33,8 +33,9 @@ class ControlNoLocality(Substrate):
 
     CONTROL_NAME = "M7ii_sans_localite"
 
-    def _buckets(self) -> dict[int, list[int]]:  # override A6
-        return {0: sorted(self.flight)}
+    def _locality(self):  # override A6 : godet global unique
+        ids = sorted(self.flight)
+        return {0: ids}, {mid: [0] for mid in ids}
 
 
 class ControlAcausal(Substrate):

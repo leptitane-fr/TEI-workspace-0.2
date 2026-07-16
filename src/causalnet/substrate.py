@@ -228,30 +228,31 @@ class Substrate:
         else:
             raise ValueError(f"rot_rule inconnue : {self.P.rot_rule}")
 
-    def _buckets(self) -> dict[int, list[int]]:
-        """[A6] Godets de localité relationnelle : ancêtre -> messagers dont
-        l'événement d'émission contient cet ancêtre à profondeur <= p. Deux
-        messagers ne sont testables que s'ils partagent un godet."""
+    def _locality(self) -> tuple[dict[int, list[int]], dict[int, list[int]]]:
+        """[A6] Localité relationnelle : godets (ancêtre -> messagers dont
+        l'événement d'émission contient cet ancêtre à profondeur <= p) et,
+        pour chaque messager, la liste triée des godets auxquels il
+        appartient. Deux messagers ne sont testables que s'ils partagent un
+        godet. Parcours en ordre d'identifiants croissants [A8]."""
         buckets: dict[int, list[int]] = {}
+        membership: dict[int, list[int]] = {}
         for mid in sorted(self.flight):            # ordre déterministe [A8]
             emitter = self._event_by_id[self.flight[mid].emitter]
-            for aid in sorted(emitter.anc[self.P.p]):
+            keys = sorted(emitter.anc[self.P.p])
+            membership[mid] = keys
+            for aid in keys:
                 buckets.setdefault(aid, []).append(mid)
-        return buckets
+        return buckets, membership
 
-    def _neighborhoods(self, buckets: dict[int, list[int]]) -> dict[int, list[int]]:
-        """[A6][A13] Pour chaque messager : la liste triée des messagers
-        testables avec lui (candidats A4) ; sa taille est la densité locale
-        qui alimente le déphasage thermique A13."""
-        neigh: dict[int, set] = {mid: set() for mid in self.flight}
-        for aid in sorted(buckets):
-            members = buckets[aid]
-            if len(members) < 2:
-                continue
-            mset = set(members)
-            for mid in members:
-                neigh[mid].update(mset)
-        return {mid: sorted(s - {mid}) for mid, s in neigh.items()}
+    def _local_density(self, pivot_mid: int, buckets: dict[int, list[int]],
+                       membership: dict[int, list[int]]) -> int:
+        """[A13] Densité locale : nombre de messagers en vol testables (au
+        sens [A6]) avec le pivot au début du tick, pivot exclu. C'est
+        l'unique entrée du déphasage thermique."""
+        union: set = set()
+        for aid in membership[pivot_mid]:
+            union.update(buckets[aid])
+        return len(union) - 1
 
     def _compatible(self, a: Messenger, b: Messenger) -> bool:
         """[A4] Prédicat de compatibilité local sur les états (rare : s << m).
@@ -307,10 +308,11 @@ class Substrate:
         self.tick += 1
         self._oscillate_all()
 
-        buckets = self._buckets()
-        neigh = self._neighborhoods(buckets)
+        buckets, membership = self._locality()
 
         # --- Appariement glouton déterministe [A4][A8] ---
+        # Parcours godet par godet (ordre : ancêtres croissants du pivot,
+        # membres en identifiants croissants) — déterministe [A8].
         consumed: set = set()
         executions: list[tuple[list[int], int]] = []  # (mids, densité pivot)
         k = self.P.k
@@ -320,23 +322,30 @@ class Substrate:
             pivot = self.flight[pivot_mid]
             group = [pivot_mid]
             emitters = {pivot.emitter}
-            for cand_mid in neigh[pivot_mid]:
-                if cand_mid in consumed or cand_mid == pivot_mid:
-                    continue
-                cand = self.flight[cand_mid]
-                if not self._compatible(pivot, cand):
-                    continue
-                if len(group) == k - 1 and len(emitters) < 2 \
-                        and cand.emitter in emitters:
-                    # [A1] dernier siège réservé à une seconde cause distincte
-                    continue
-                group.append(cand_mid)
-                emitters.add(cand.emitter)
+            seen = {pivot_mid}
+            for aid in membership[pivot_mid]:
+                for cand_mid in buckets[aid]:
+                    if cand_mid in seen or cand_mid in consumed:
+                        continue
+                    seen.add(cand_mid)
+                    cand = self.flight[cand_mid]
+                    if not self._compatible(pivot, cand):
+                        continue
+                    if len(group) == k - 1 and len(emitters) < 2 \
+                            and cand.emitter in emitters:
+                        # [A1] dernier siège réservé à une 2e cause distincte
+                        continue
+                    group.append(cand_mid)
+                    emitters.add(cand.emitter)
+                    if len(group) == k:
+                        break
                 if len(group) == k:
                     break
             if len(group) == k and len(emitters) >= 2:   # [A1] >= 2 causes
                 consumed.update(group)
-                executions.append((group, len(neigh[pivot_mid])))
+                executions.append(
+                    (group, self._local_density(pivot_mid, buckets,
+                                                membership)))
 
         # --- Exécutions : nouveaux événements + émissions [A1][A2][A13] ---
         for group, density in executions:

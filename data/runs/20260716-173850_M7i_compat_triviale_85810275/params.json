@@ -1,0 +1,28 @@
+{
+  "label": "M7i_compat_triviale",
+  "params": {
+    "m": 32,
+    "s": 4,
+    "f": 3,
+    "k": 2,
+    "p": 3,
+    "W": 8,
+    "rot_rule": "rotl_step",
+    "compose_rule": "fold_xor_rot",
+    "predicate_rule": "hamming_pivot",
+    "dephase_num": 1,
+    "dephase_den": 64,
+    "seed_N": 600,
+    "seed_salt": 0
+  },
+  "experimenter_config": {
+    "max_ticks": 300,
+    "abort_flight": 200000,
+    "checkpoint_every": 50,
+    "front_layers": 4,
+    "m1_samples": 200,
+    "m2_sources": 64,
+    "m3_sources": 32,
+    "m3_tmax": 256
+  }
+}
